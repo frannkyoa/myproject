@@ -1,21 +1,19 @@
-FROM node:alpine as builder
-ENV NODE_ENV="production"
+FROM node:12
 
-# Copy app's source code to the /app directory
-COPY . /app
+# Create app directory
+WORKDIR /usr/src/app
 
-# The application's directory will be the working directory
-WORKDIR /app
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-# Install Node.js dependencies defined in '/app/packages.json'
 RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
 
-FROM node:9-prod
-ENV NODE_ENV="production"
-COPY --from=builder /app /app
-WORKDIR /app
-ENV PORT 5000
-EXPOSE 5000
+# Bundle app source
+COPY . .
 
-# Start the application
-CMD ["npm", "start"]
+EXPOSE 8080
+CMD [ "node", "server.js" ]
