@@ -4,11 +4,11 @@ metadata:
   name: hello
   labels:
     app: hello
-    type: front-end
+    type: hello
 spec:
   containers:
       - name: hello
-        image: frannyoa/hello:latest
+        image: frannyoa/frankie_docker_1repo:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 5000
